@@ -1,3 +1,7 @@
 FROM alpine:3.16
 
-CMD ["echo", "i am nginx"]
+RUN apk add --no-cache nginx
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
