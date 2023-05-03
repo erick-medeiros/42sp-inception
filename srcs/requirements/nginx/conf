@@ -1,0 +1,10 @@
+events {}
+
+http {
+    index index.html;
+
+    server {
+        listen      80;
+        root /data/www;
+    }
+}

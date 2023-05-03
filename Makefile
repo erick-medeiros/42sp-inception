@@ -23,4 +23,6 @@ re: fclean all
 delete:
 	docker system prune -f
 
-.PHONY: all up down ls clean fclean re delete
+run: all clean ls
+
+.PHONY: all up down ls clean fclean re delete run
