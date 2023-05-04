@@ -6,7 +6,7 @@ services:
     image: nginx
     build: ./requirements/nginx/
     ports:
-      - "80:80"
+      - "443:443"
   mariadb:
     container_name: mariadb
     image: mariadb

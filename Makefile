@@ -1,8 +1,11 @@
 DOCKER_COMPOSE_FILE=srcs/docker-compose.yml
+SCRIPT_HOST=srcs/host.sh
 
 all: up
 
 up:
+	@sh $(SCRIPT_HOST) install
+	@make -C ./srcs/requirements/nginx/ssl --no-print-directory
 	docker-compose -f $(DOCKER_COMPOSE_FILE) up --build --detach
 
 down:
@@ -17,12 +20,10 @@ clean:
 
 fclean: clean
 	docker-compose -f $(DOCKER_COMPOSE_FILE) down --rmi all
+	@sh $(SCRIPT_HOST) remove
 
 re: fclean all
 
-delete:
-	docker system prune -f
-
 run: all clean ls
 
-.PHONY: all up down ls clean fclean re delete run
+.PHONY: all up down ls clean fclean re run
