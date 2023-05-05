@@ -7,6 +7,10 @@ services:
     build: ./requirements/nginx/
     ports:
       - "443:443"
+    volumes:
+      - wordpress:/data/wordpress
+    depends_on:
+      - wordpress
   mariadb:
     container_name: mariadb
     image: mariadb
@@ -15,3 +19,21 @@ services:
     container_name: wordpress
     image: wordpress
     build: ./requirements/wordpress/
+    volumes:
+      - wordpress:/data/wordpress
+
+volumes:
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      device: ${VOLUME_FOLDER}/wordpress
+      o: bind
+      type: none
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      device: ${VOLUME_FOLDER}/mariadb
+      o: bind
+      type: none
