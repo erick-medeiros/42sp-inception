@@ -11,16 +11,22 @@ services:
       - wordpress:/data/wordpress
     depends_on:
       - wordpress
+    networks:
+      - internal
   mariadb:
     container_name: mariadb
     image: mariadb
     build: ./requirements/mariadb/
+    networks:
+      - internal
   wordpress:
     container_name: wordpress
     image: wordpress
     build: ./requirements/wordpress/
     volumes:
       - wordpress:/data/wordpress
+    networks:
+      - internal
 
 volumes:
   wordpress:
@@ -37,3 +43,7 @@ volumes:
       device: ${VOLUME_FOLDER}/mariadb
       o: bind
       type: none
+
+networks:
+  internal:
+    driver: bridge

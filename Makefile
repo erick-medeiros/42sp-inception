@@ -17,6 +17,7 @@ ls:
 	docker image ls -a
 	docker container ls -a
 	docker volume ls
+	docker network ls -f type=custom
 
 clean:
 	docker image prune -f
