@@ -1,3 +1,28 @@
 FROM alpine:3.16
 
-CMD ["echo", "i am mariadb"]
+ARG MYSQL_USER MYSQL_PASSWORD MYSQL_DATABASE MYSQL_ROOT_PASSWORD
+
+RUN apk add --no-cache mariadb mariadb-client mariadb-openrc mariadb-server-utils
+
+RUN cd /etc/my.cnf.d/ ; \
+    sed -i "s/skip-networking/skip-networking=0/g" mariadb-server.cnf ; \
+    sed -i "s/#bind-address=0.0.0.0/bind-address=0.0.0.0/g" mariadb-server.cnf
+
+RUN mkdir -p /var/run/mysqld; \
+    chown -R mysql:mysql /var/run/mysqld;
+
+RUN mkdir -p /var/lib/mysql; \
+    chown -R mysql:mysql /var/lib/mysql; \
+    mysql_install_db --user=mysql --datadir=/var/lib/mysql
+
+COPY ./conf/init.sql .
+RUN sed -i "s/\${MYSQL_USER}/${MYSQL_USER}/g" init.sql; \
+    sed -i "s/\${MYSQL_PASSWORD}/${MYSQL_PASSWORD}/g" init.sql; \
+    sed -i "s/\${MYSQL_DATABASE}/${MYSQL_DATABASE}/g" init.sql; \
+    sed -i "s/\${MYSQL_ROOT_PASSWORD}/${MYSQL_ROOT_PASSWORD}/g" init.sql; \
+    mysqld --user=mysql --bootstrap < init.sql ; \
+    rm -f init.sql
+
+USER mysql
+
+CMD ["mysqld"]
