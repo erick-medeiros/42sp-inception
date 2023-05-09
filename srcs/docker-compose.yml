@@ -4,6 +4,7 @@ services:
   nginx:
     container_name: nginx
     image: nginx
+    restart: on-failure
     build: ./requirements/nginx/
     ports:
       - "443:443"
@@ -13,24 +14,10 @@ services:
       - wordpress
     networks:
       - internal
-  mariadb:
-    container_name: mariadb
-    image: mariadb
-    build:
-      context: ./requirements/mariadb/
-      dockerfile: Dockerfile
-      args:
-        - MYSQL_USER=${MYSQL_USER}
-        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        - MYSQL_DATABASE=${MYSQL_DATABASE}
-        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    volumes:
-      - mariadb:/var/lib/mysql
-    networks:
-      - internal
   wordpress:
     container_name: wordpress
     image: wordpress
+    restart: on-failure
     build:
       context: ./requirements/wordpress/
       dockerfile: Dockerfile
@@ -41,6 +28,24 @@ services:
         - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
       - wordpress:/data/wordpress
+    depends_on:
+      - mariadb
+    networks:
+      - internal
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    restart: on-failure
+    build:
+      context: ./requirements/mariadb/
+      dockerfile: Dockerfile
+      args:
+        - MYSQL_USER=${MYSQL_USER}
+        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - mariadb:/var/lib/mysql
     networks:
       - internal
 
