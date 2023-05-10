@@ -23,6 +23,11 @@ RUN sed -i "s/\${MYSQL_USER}/${MYSQL_USER}/g" init.sql; \
     mysqld --user=mysql --bootstrap < init.sql ; \
     rm -f init.sql
 
+COPY ./conf/wordpress.sql .
+RUN sed -i "1iUSE ${MYSQL_DATABASE};" wordpress.sql && \
+    mysqld --user=mysql --bootstrap < wordpress.sql ; \
+    rm -f wordpress.sql
+
 USER mysql
 
 CMD ["mysqld"]
