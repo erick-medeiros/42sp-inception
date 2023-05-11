@@ -11,3 +11,8 @@
 and:
 * Docker 🐋
 * Wordpress 🔱
+
+## Wordpress users
+
+admin: marvin marvin
+user: cadet cadet
