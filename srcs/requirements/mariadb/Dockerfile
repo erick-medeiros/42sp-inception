@@ -16,18 +16,23 @@ RUN mkdir -p /var/lib/mysql; \
     mysql_install_db --user=mysql --datadir=/var/lib/mysql
 
 COPY ./conf/init.sql .
+COPY ./conf/wordpress.sql .
+
 RUN sed -i "s/\${MYSQL_USER}/${MYSQL_USER}/g" init.sql; \
     sed -i "s/\${MYSQL_PASSWORD}/${MYSQL_PASSWORD}/g" init.sql; \
     sed -i "s/\${MYSQL_DATABASE}/${MYSQL_DATABASE}/g" init.sql; \
-    sed -i "s/\${MYSQL_ROOT_PASSWORD}/${MYSQL_ROOT_PASSWORD}/g" init.sql; \
-    mysqld --user=mysql --bootstrap < init.sql ; \
-    rm -f init.sql
+    sed -i "s/\${MYSQL_ROOT_PASSWORD}/${MYSQL_ROOT_PASSWORD}/g" init.sql
 
-COPY ./conf/wordpress.sql .
-RUN sed -i "1iUSE ${MYSQL_DATABASE};" wordpress.sql && \
-    mysqld --user=mysql --bootstrap < wordpress.sql ; \
-    rm -f wordpress.sql
+RUN /usr/bin/mysqld_safe --skip-grant-tables & \
+    while ! nc -z localhost 3306; do sleep 1; done && \
+    mysql -umysql mysql < init.sql
+
+RUN /usr/bin/mysqld_safe --skip-grant-tables & \
+    while ! nc -z localhost 3306; do sleep 1; done && \
+    mysql -u ${MYSQL_USER} ${MYSQL_DATABASE} < wordpress.sql
+
+RUN rm -f init.sql wordpress.sql
 
 USER mysql
 
-CMD ["mysqld"]
+CMD ["mysqld_safe"]
