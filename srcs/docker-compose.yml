@@ -78,6 +78,15 @@ services:
       - "21:21"
     volumes:
     - wordpress:/var/lib/ftp/
+  website:
+    container_name: website
+    image: website
+    restart: on-failure
+    build:
+     context: ./bonus/website/
+     dockerfile: Dockerfile
+    ports:
+      - "1313:1313"
 
 volumes:
   wordpress:
