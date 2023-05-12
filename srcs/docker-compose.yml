@@ -78,6 +78,8 @@ services:
       - "21:21"
     volumes:
     - wordpress:/var/lib/ftp/
+    depends_on:
+      - wordpress
   website:
     container_name: website
     image: website
@@ -87,6 +89,17 @@ services:
      dockerfile: Dockerfile
     ports:
       - "1313:1313"
+  adminer:
+    container_name: adminer
+    image: adminer
+    restart: on-failure
+    build:
+     context: ./bonus/adminer/
+     dockerfile: Dockerfile
+    depends_on:
+      - mariadb
+    networks:
+      - internal
 
 volumes:
   wordpress:
