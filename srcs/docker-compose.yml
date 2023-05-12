@@ -64,6 +64,20 @@ services:
         - REDIS_PASS=${REDIS_PASS}
     networks:
       - internal
+  ftp:
+    container_name: ftp
+    image: ftp
+    restart: on-failure
+    build:
+     context: ./bonus/ftp/
+     dockerfile: Dockerfile
+     args:
+        - FTP_USER
+        - FTP_PASS
+    ports:
+      - "21:21"
+    volumes:
+    - wordpress:/var/lib/ftp/
 
 volumes:
   wordpress:

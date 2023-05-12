@@ -16,3 +16,9 @@ and:
 
 admin: marvin marvin
 user: cadet cadet
+
+## Get IPAddress
+
+```sh
+docker inspect <container> | grep '"IPAddress"'
+```
