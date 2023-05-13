@@ -32,9 +32,9 @@ RUN cp wp-config-sample.php wp-config.php && \
 	sed -i "s/username_here/$MYSQL_USER/g" wp-config.php  && \
 	sed -i "s/password_here/$MYSQL_PASSWORD/g" wp-config.php
 
-RUN wp config set WP_REDIS_HOST "${REDIS_HOST}"
-RUN wp config set WP_REDIS_PORT "${REDIS_PORT}"
-RUN wp config set WP_REDIS_PASSWORD "${REDIS_PASS}"
+RUN wp config set WP_REDIS_HOST "${REDIS_HOST}" ; \
+	wp config set WP_REDIS_PORT "${REDIS_PORT}" ; \
+	wp config set WP_REDIS_PASSWORD "${REDIS_PASS}"
 
 RUN mkdir -p /data/wordpress && \
 	chmod -R 777 /data/wordpress
