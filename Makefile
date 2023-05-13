@@ -1,13 +1,12 @@
 DOCKER_COMPOSE_FILE=srcs/docker-compose.yml
 SCRIPT_HOST=srcs/host.sh
-VOLUMES_FOLDER=/home/eandre-f/data
+SSL_DIR=./srcs/requirements/nginx/ssl
 
 all: up
 
 up:
 	@sh $(SCRIPT_HOST) install
-	@make -C ./srcs/requirements/nginx/ssl --no-print-directory
-	@sudo mkdir -p $(VOLUMES_FOLDER)/wordpress $(VOLUMES_FOLDER)/mariadb
+	@make -C $(SSL_DIR) --no-print-directory
 	docker-compose -f $(DOCKER_COMPOSE_FILE) up --build --detach
 
 down:
@@ -25,7 +24,7 @@ clean:
 fclean: clean
 	docker-compose -f $(DOCKER_COMPOSE_FILE) down --rmi all --volumes
 	@sh $(SCRIPT_HOST) remove
-	@sudo rm -fr $(VOLUMES_FOLDER)
+	@make clean -C $(SSL_DIR) --no-print-directory
 
 re: fclean all
 

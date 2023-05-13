@@ -102,6 +102,8 @@ services:
      dockerfile: Dockerfile
     ports:
       - "3001:3001"
+    volumes:
+      - uptime-kuma:/uptime-kuma/data/
     networks:
       - internal
 
@@ -110,14 +112,21 @@ volumes:
     name: wordpress
     driver: local
     driver_opts:
-      device: ${VOLUME_FOLDER}/wordpress
+      device: ${VOLUME_DIR}/wordpress
       o: bind
       type: none
   mariadb:
     name: mariadb
     driver: local
     driver_opts:
-      device: ${VOLUME_FOLDER}/mariadb
+      device: ${VOLUME_DIR}/mariadb
+      o: bind
+      type: none
+  uptime-kuma:
+    name: uptime-kuma
+    driver: local
+    driver_opts:
+      device: ${VOLUME_DIR}/uptime-kuma
       o: bind
       type: none
 
