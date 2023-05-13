@@ -1,29 +1,46 @@
 # 42sp-inception
 
-## The LEMP Stack
+## Mandatory
 
-* Linux 🐧
-* (e)Nginx 🟢
-* MariaDB 🦭
-* PHP 🐘
+### The LEMP Stack
+Linux 🐧 ~ (e)Nginx 🟢 ~ MariaDB 🦭 ~ PHP 🐘
 
----
-and:
-* Docker 🐋
-* Wordpress 🔱
+#### and
+Docker 🐋 ~ Wordpress 🔱
 
-## Wordpress users
+## Bonus
 
-admin: marvin marvin
-user: cadet cadet
+Redis 🟥 ~ FTP Server 📁 ~ Static Website 🌐 ~ Adminer 🛡️
 
-## Get IPAddress
+### Extra
+
+Uptime Kuma 🟢
+
+## Services
+
+* https://eandre-f.42.fr:443 wordpress
+* https://eandre-f.42.fr:443/wp-admin wordpress admin
+* https://eandre-f.42.fr:443/website website (password generator)
+* https://eandre-f.42.fr:443/adminer adminer
+* http://localhost:3001 uptime kuma
+
+## ftp
 
 ```sh
-docker inspect <container> | grep '"IPAddress"'
+# get IPAddress
+docker inspect ftp | grep '"IPAddress"'
+# using
+ftp <ip>
 ```
 
-## Uptime Kuma
+### Credentials
 
-username: uptime
-password: kuma42
+Wordpress:
+* admin: marvin marvin
+* user: cadet cadet
+Uptime Kuma:
+* username: uptime
+* password: kuma42
+FTP
+* user: ftp_user
+* pass: ftp_pass
