@@ -31,4 +31,15 @@ re: fclean all
 
 run: all clean ls
 
-.PHONY: all up down ls clean fclean re run
+links:
+	@echo
+	@echo "mandatory:"
+	@echo " Wordpress\t\t: https://eandre-f.42.fr/"
+	@echo " Wordpress Admin\t: https://eandre-f.42.fr/wp-admin"
+	@echo "bonus"
+	@echo " Website\t\t: https://eandre-f.42.fr/website"
+	@echo " Adminer\t\t: https://eandre-f.42.fr/adminer"
+	@echo " Uptime Kuma\t\t: http://localhost:3001"
+	@echo
+
+.PHONY: all up down ls clean fclean re run links
