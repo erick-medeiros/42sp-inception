@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Password generator</title>
+</head>
+
+<body>
+	<h2>Password generator</h2>
+	<input type="text" placeholder="Generate password" id="password" readonly="">
+	<br>
+	<label>
+		Capital letters
+		<input type="checkbox" id="check-capital" checked>
+	</label>
+	<br>
+	<label>
+		Small letters
+		<input type="checkbox" id="check-small" checked>
+	</label>
+	<br>
+	<label>
+		Numbers
+		<input type="checkbox" id="check-numbers" checked>
+	</label>
+	<br>
+	<label>
+		Symbols
+		<input type="checkbox" id="check-symbols" checked>
+	</label>
+	<br>
+	<label>
+		Number of password characters
+		<br>
+		<input type="range" id="range">
+	</label>
+	<br>
+	<button onclick="getPassword()">Generate password</button>
+	<button onclick="copyToClipboard()">Copy</button>
+	<script>
+		function getPassword() {
+			const range = document.getElementById("range").value;
+			let chars = "";
+			if (document.getElementById("check-capital").checked)
+				chars += "ABCDEFGHIJLMNOPQRSTUVWXYZ";
+			if (document.getElementById("check-small").checked)
+				chars += "abcdefghijklmnopqrstuvwxyz";
+			if (document.getElementById("check-numbers").checked)
+				chars += "0123456789";
+			if (document.getElementById("check-symbols").checked)
+				chars += "!@#$%^&*()+?><:{}[]";
+			let password = "";
+			for (let i = 0; i < range; i++) {
+				const random = Math.floor(Math.random() * chars.length);
+				password += chars.charAt(random);
+			}
+			document.getElementById("password").value = password
+		}
+		function copyToClipboard() {
+			const pass = document.getElementById("password").value
+			navigator.clipboard.writeText(pass)
+		}
+	</script>
+</body>
+
+</html>

@@ -82,17 +82,6 @@ services:
       - wordpress
     networks:
       - internal
-  website:
-    container_name: website
-    image: website
-    restart: on-failure
-    build:
-     context: ./bonus/website/
-     dockerfile: Dockerfile
-    ports:
-      - "1313:1313"
-    networks:
-      - internal
   adminer:
     container_name: adminer
     image: adminer
