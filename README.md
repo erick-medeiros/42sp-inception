@@ -38,9 +38,11 @@ ftp <ip>
 Wordpress:
 * admin: marvin marvin
 * user: cadet cadet
+
 Uptime Kuma:
 * username: uptime
 * password: kuma42
+
 FTP
 * user: ftp_user
 * pass: ftp_pass
