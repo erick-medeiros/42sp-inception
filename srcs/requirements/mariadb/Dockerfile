@@ -35,4 +35,6 @@ RUN rm -f init.sql wordpress.sql
 
 USER mysql
 
+EXPOSE 3306
+
 CMD ["mysqld_safe"]

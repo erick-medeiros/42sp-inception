@@ -43,4 +43,6 @@ COPY scripts/setup.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/setup.sh
 ENTRYPOINT [ "setup.sh" ]
 
+EXPOSE 9000
+
 CMD ["php-fpm7", "-F"]

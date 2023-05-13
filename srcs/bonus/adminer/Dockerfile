@@ -15,4 +15,6 @@ WORKDIR /data/adminer
 
 RUN wget ${ADMIN_URL} -O index.php
 
+EXPOSE 9000
+
 CMD ["php-fpm7", "-F"]
