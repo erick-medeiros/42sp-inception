@@ -23,12 +23,12 @@ services:
       dockerfile: Dockerfile
       args:
         - MYSQL_HOST=mariadb:3306
-        - MYSQL_USER=${MYSQL_USER}
-        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        - MYSQL_DATABASE=${MYSQL_DATABASE}
+        - MYSQL_USER
+        - MYSQL_PASSWORD
+        - MYSQL_DATABASE
         - REDIS_HOST=redis
         - REDIS_PORT=6379
-        - REDIS_PASS=${REDIS_PASS}
+        - REDIS_PASS
     volumes:
       - wordpress:/data/wordpress
     depends_on:
@@ -44,10 +44,10 @@ services:
       context: ./requirements/mariadb/
       dockerfile: Dockerfile
       args:
-        - MYSQL_USER=${MYSQL_USER}
-        - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-        - MYSQL_DATABASE=${MYSQL_DATABASE}
-        - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        - MYSQL_USER
+        - MYSQL_PASSWORD
+        - MYSQL_DATABASE
+        - MYSQL_ROOT_PASSWORD
     volumes:
       - mariadb:/var/lib/mysql
     networks:
@@ -61,7 +61,7 @@ services:
      context: ./bonus/redis/
      dockerfile: Dockerfile
      args:
-        - REDIS_PASS=${REDIS_PASS}
+        - REDIS_PASS
     networks:
       - internal
   ftp:
