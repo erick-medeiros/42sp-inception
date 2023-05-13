@@ -22,3 +22,8 @@ user: cadet cadet
 ```sh
 docker inspect <container> | grep '"IPAddress"'
 ```
+
+## Uptime Kuma
+
+username: uptime
+password: kuma42

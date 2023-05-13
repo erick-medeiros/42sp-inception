@@ -77,9 +77,11 @@ services:
     ports:
       - "21:21"
     volumes:
-    - wordpress:/var/lib/ftp/
+      - wordpress:/var/lib/ftp/
     depends_on:
       - wordpress
+    networks:
+      - internal
   website:
     container_name: website
     image: website
@@ -89,6 +91,8 @@ services:
      dockerfile: Dockerfile
     ports:
       - "1313:1313"
+    networks:
+      - internal
   adminer:
     container_name: adminer
     image: adminer
@@ -98,6 +102,17 @@ services:
      dockerfile: Dockerfile
     depends_on:
       - mariadb
+    networks:
+      - internal
+  uptime-kuma:
+    container_name: uptime-kuma
+    image: uptime-kuma
+    restart: on-failure
+    build:
+     context: ./bonus/uptime-kuma/
+     dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
     networks:
       - internal
 
